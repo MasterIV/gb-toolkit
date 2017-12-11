@@ -3,6 +3,7 @@
 // Ne Menge geraffel
 require 'inc/common.php';
 define( 'IV_SELF', 'index.php?' );
+define( 'ROOT', __DIR__ );
 
 // User ermitteln
 if( !$user = $session->relogin( 2 ))
@@ -14,11 +15,28 @@ $loader = new template_loader( 'tpl' );
 if( $user ) {
 	$view = new view('main');
 	$modul = $_GET['modul'];
+	$project = $session->project;
+
 
 	if( !preg_match('/^[-\w]+(\.[-\w]+)*$/', $modul ) || !is_file( 'moduls/'.$modul.'.php' ))
 		$modul = 'projects';
-	if(empty($session->project))
+
+	if(empty($project) || !is_dir(PROJECTS_ROOT.'/'.$project)) {
 		$modul = 'projects';
+	} else {
+		$files = [];
+
+		foreach(glob(PROJECTS_ROOT.'/'.$project.'/*.c') as $f) {
+			$content = file_get_contents($f);
+			$files[] = [
+					'type' => strpos($content, 'Tile Source File') ? 'sprite' : 'source',
+					'name' => substr( $f, 1+strrpos( $f, '/' ), -1*strlen(strrchr( $f, '.')))
+			];
+		}
+
+		$view->assign('files', $files);
+	}
+
 
 	try {
 		include( 'moduls/'.$modul.'.php' );

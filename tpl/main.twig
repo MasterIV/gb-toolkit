@@ -24,11 +24,65 @@
 		<pre class="alert alert-success">{{ success }}</pre>
 	{% endif %}
 
+	{% if files %}
+		<div class="pull-left well files">
+			<div class="btn-group">
+				<a class="btn btn-success" href="?modul=compile"><span class="icon-play icon-white"></span> Compile & Run</a>
+				<a class="btn" href="#newFileModal" data-toggle="modal"><span class="icon-plus"></span> New</span></a>
+			</div>
+			<br><br>
+
+			{% for file in files %}
+				<div>
+					<a href="?modul={{ file.type }}&id={{  file.name }}">
+						<img src="img/file_{{ file.type }}.png">
+						{{ file.name }}
+					</a>
+				</div>
+			{% endfor %}
+		</div>
+
+	{% endif %}
+
 	{% if template %}
 		{% include template %}
 	{% endif %}
 
+
 	{{ content|raw }}
+</div>
+
+
+<div class="modal hide fade" id="newFileModal" role="dialog">
+	<form action="?modul=overview" method="post">
+		<div class="modal-header">
+			<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+			<h3>New File</h3>
+		</div>
+		<div class="modal-body">
+
+			<div class="control-group">
+				<label class="control-label" for="inputName">Name</label>
+				<div class="controls">
+					<input class="input-xlarge" type="text" id="inputName" placeholder="Name" name="file_name">
+				</div>
+			</div>
+
+			<div class="control-group">
+				<label class="control-label" for="inputType">Type</label>
+				<div class="controls">
+					<select class="input-xlarge"  id="inputType" name="file_type">
+						<option value="source">Source</option>
+						<option value="sprite">Sprite</option>
+					</select>
+				</div>
+			</div>
+		</div>
+		<div class="modal-footer">
+			<button class="btn" data-dismiss="modal">Cancel</button>
+			<button type="submit" class="btn btn-primary">Create</button>
+		</div>
+	</form>
 </div>
 
 </body>

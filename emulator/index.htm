@@ -1,0 +1,101 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html;charset=utf-8"/>
+<meta http-equiv="Pragma" content="no-cache" />
+<meta http-equiv="Expires" content="-1" />
+<title>JSGB v.0.02: a JavaScript Nintendo GameBoy Emulator and Debugger</title>
+<!--
+
+ JSGB v0.02 - a JavaScript Nintendo GameBoy Emulator
+ Copyright (C) 2009 Pedro Ladaria <pedro.ladaria at Gmail dot com>
+
+ This program is free software; you can redistribute it and/or
+ modify it under the terms of the GNU General Public License
+ version 2 as published by the Free Software Foundation.
+ The full license is available at http://www.gnu.org/licenses/gpl.html
+
+ This program is distributed in the hope that it will be useful,
+ but WITHOUT ANY WARRANTY; without even the implied warranty of
+ MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+ GNU General Public License for more details.
+
+-->
+<script src="toolbox.js" type="application/x-javascript"></script>
+<script src="scrollbar.js" type="application/x-javascript"></script>
+<script src="jsgb.cpu.js" type="application/x-javascript"></script>
+<script src="jsgb.memory.js" type="application/x-javascript"></script>
+<script src="jsgb.rom.js" type="application/x-javascript"></script>
+<script src="jsgb.interrupts.js" type="application/x-javascript"></script>
+<script src="jsgb.input.js" type="application/x-javascript"></script>
+<script src="jsgb.lcd.js" type="application/x-javascript"></script>
+<script src="jsgb.timers.js" type="application/x-javascript"></script>
+<script src="jsgb.debugger.js" type="application/x-javascript"></script>
+<script src="jsgb.gameboy.js" type="application/x-javascript"></script>
+<link href="jsgb.styles.css?v=2" rel="stylesheet" type="text/css" />
+
+	<style>
+		canvas {
+			image-rendering: optimizeSpeed;             /* Older versions of FF          */
+			image-rendering: -moz-crisp-edges;          /* FF 6.0+                       */
+			image-rendering: -webkit-optimize-contrast; /* Safari                        */
+			image-rendering: -o-crisp-edges;            /* OS X & Windows Opera (12.02+) */
+			image-rendering: pixelated;                 /* Awesome future-browsers       */
+			-ms-interpolation-mode: nearest-neighbor;   /* IE                            */
+		}
+	</style>
+
+
+</head>
+<body>
+
+<div class="C">
+
+	<canvas id="LCD" width="160" height="144" style="width: 480px; height: 432px;"></canvas>
+	<div id="STATUS">Pause</div>
+	<div id="DEBUG">&nbsp;</div>
+
+
+	<input id="TOGGLE_DEBUGGER" type="checkbox" onclick="gb_Toggle_Debugger(this.checked);" />
+	<label for="TOGGLE_DEBUGGER">debugger</label> | <a href="credits.htm">credits</a>
+</div>
+
+<div id="DEBUGGER"></div>
+
+<div class="IB L">
+	<strong>X</strong>: Button A<br/>
+	<strong>Z</strong>: Button B<br/>
+	<strong>A</strong>: Start<br/>
+	<strong>S</strong>: Select<br/>
+</div>
+
+<script type="application/x-javascript">
+
+var gbSeconds = 0;
+var gbFrames  = 0;
+
+function gb_Show_Fps() {
+  gbFrames+=gbFPS;
+  gbSeconds++;
+  $('STATUS').innerHTML = 
+    'Running: '+gbFPS+' '+
+    'fps - Average: '+(gbFrames/gbSeconds).toFixed(2)+' - '+
+    'Bank switches/s: '+gbBankSwitchCount;
+  gbFPS=0;
+  gbBankSwitchCount=0;
+}
+
+function gb_Toggle_Debugger(show) {
+  $('DEBUGGER').style.height=(show)?'auto':'0px';
+}
+
+window.onload = function() {
+  gb_Insert_Cartridge('gbtd.gb', true);
+  gb_Toggle_Debugger(false);
+}
+
+</script>
+
+
+</body>
+</html>

@@ -5,8 +5,12 @@
 
 	<div class="modal-body">
 		<h4>Open Project</h4>
-		<a href="#" class="project">
-		</a>
+
+		<ul>
+		{% for project in projects %}
+			<a href="?project={{ project }}" class="project">{{ project }}</a>
+		{% endfor %}
+		</ul>
 
 
 		<hr>
