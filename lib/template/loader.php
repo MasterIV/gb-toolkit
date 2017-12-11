@@ -4,11 +4,29 @@ class template_loader {
 	protected $twig;
 
 	public function  __construct( $p ) {
-		$loader = new Twig_Loader_Filesystem( array( $p, 'assets/template/' ));
+		$loader = new Twig_Loader_Filesystem( array( $p ));
 		$this->twig = new Twig_Environment( $loader, array());
 		$this->twig->addGlobal( 'base_dir', $p );
 
-		$options = iv::get('template');
+		$options = ['filter' => [
+				[
+						'name' => 'dateformat',
+						'callback' => ['template_filter_date', 'format'],
+				], [
+						'name' => 'datefancy',
+						'callback' => ['template_filter_date', 'fancy'],
+				], [
+						'name' => 'markdown',
+						'callback' => ['template_filter_markdown', 'transform',],
+				], [
+						'name' => 'bbcode',
+						'callback' => ['template_filter_bbcode', 'bbcode2html']
+				], [
+						'name' => 'gravatar',
+						'callback' => ['template_filter_gravatar', 'gravatar']
+				],
+		]];
+
 		foreach($options['filter'] as $filter )
 			$this->twig->addFilter( new Twig_SimpleFilter( $filter['name'], $filter['callback'] ));
 	}
@@ -27,5 +45,5 @@ class template_loader {
  * @return Twig_Template
  */
 function template( $name ) {
-	return iv::get( 'loader' )->get( $name );
+	return $GLOBALS['loader']->get( $name );
 }

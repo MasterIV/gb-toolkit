@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="de">
+	<head>
+		<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
+		<title>Cloud GameBoy Login</title>
+
+		{% for file in js %}<script type="text/javascript" src="{{ file }}"></script>{% endfor %}
+		{% for file in css %}<link rel="stylesheet" href="{{ file }}" type="text/css" />{% endfor %}
+	</head>
+
+	<body>
+
+		<form class="form-horizontal" action="{{ submit_url }}" method="post">
+			<div class="modal">
+				<div class="modal-header">
+					<h3>Cloud GameBoy</h3>
+				</div>
+
+				<div class="modal-body">
+
+					{% if error %}<div class="alert alert-error"><strong>{{ error }}</strong></div>{% endif %}
+
+					<div class="control-group">
+						<label class="control-label" for="inputName">Name</label>
+						<div class="controls">
+							<input type="text" id="inputName" placeholder="Name" name="admin_name">
+						</div>
+					</div>
+					<div class="control-group">
+						<label class="control-label" for="inputPassword">Password</label>
+						<div class="controls">
+							<input type="password" id="inputPassword" placeholder="Password" name="admin_pass">
+						</div>
+					</div>
+					<div class="control-group">
+						<div class="controls">
+							<label class="checkbox" for="inputRelogin">
+								<input type="checkbox" id="inputRelogin" name="relogin"> Eingeloggt bleiben
+							</label>
+						</div>
+					</div>
+				</div>
+
+				<div class="modal-footer">
+							<button type="submit" class="btn btn-primary">Login</button>
+				</div>
+			</div>
+		</form>
+	</body>
+</html>

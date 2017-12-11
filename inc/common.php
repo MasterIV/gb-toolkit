@@ -34,6 +34,7 @@ if( get_magic_quotes_gpc()) {
 
 // Funktion
 require 'inc/functions.php';
+require 'inc/settings.php';
 
 try {
 	// Datenbankverbindung herstellen
@@ -42,6 +43,9 @@ try {
 	// Datenbankzugangsdaten sollen nicht als Stacktrace ausgegeben werden
 	die('Could not connect to database');
 }
+
+// init session
+$session = new session_iv( 'IVSESSID' );
 
 // Sitzung beenden
 if( isset( $_GET['logout'] ))

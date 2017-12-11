@@ -1,0 +1,39 @@
+.input-xlarge {
+	width: 500px;
+}
+
+
+
+
+/* not sure where this is used */
+
+.popup_container {
+	position: fixed;
+	top: 0px;
+	left: 0px;
+	width: 100%;
+	height: 100%;
+	z-index: 10;
+}
+
+.popup_background {
+	position: absolute;
+	top: 0px;
+	left: 0px;
+	width: 100%;
+	height: 100%;
+	z-index: 15;
+	background-color: rgba( 0, 0, 0, 0.5 );
+}
+
+.popup_content {
+	position: relative;
+	margin: 10% auto;
+	z-index: 20;
+	overflow: auto;
+	max-height: 80%
+}
+
+.controls > .btn {
+	margin-right: 10px;
+}
