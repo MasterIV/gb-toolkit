@@ -1,12 +1,10 @@
-body { font-family:'Sans Serif','Trebuchet MS'; font-size:13px; margin:0px;
-  padding:8px 0px 8px 8px; background:#fff; } 
-table { font-family:'Bitstream Vera Sans Mono','Lucida Console','droid_monospace',monospace; font-size:9pt;
+.emulator table { font-family:'Bitstream Vera Sans Mono','Lucida Console','droid_monospace',monospace; font-size:9pt;
  line-height:15px; border-collapse:collapse; text-align:left; margin:0px; }
-thead { background:#d8d8d8; text-align:center; }
-th { font-family:sans-serif; padding:2px 0px 4px 0px; font-size:10pt;}
-th, td { border:1px solid #000; }
-hr { border:none;border-bottom:1px solid #000;margin:1px 0px;}
-canvas { padding:1px; border:1px solid #888; margin:2px; }
+.emulator thead { background:#d8d8d8; text-align:center; }
+.emulator th { font-family:sans-serif; padding:2px 0px 4px 0px; font-size:10pt;}
+.emulator th, .emulator td { border:1px solid #000; }
+.emulator hr { border:none;border-bottom:1px solid #000;margin:1px 0px;}
+.emulator canvas { padding:1px; border:1px solid #888; margin:2px; }
 .L { text-align:left; }
 .R { text-align:right; }
 .C { text-align:center; }
