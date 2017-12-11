@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title></title>
+	<style>
+		.colorselect {
+			display: inline-block;
+			width: 50px;
+			height: 50px;
+			cursor: pointer;
+			border: 1px solid black;
+		}
+
+		.colorselect.active {
+			border-color: red;
+		}
+
+		canvas, #output {
+			border: 1px solid black;
+		}
+	</style>
+
+	<script>
+		var color, colors = ['white', 'lightgrey', 'darkgrey', 'black'];
+		var tile = 64;
+
+		function decode(data) {
+			var result = [];
+
+			for(var y = 0; y < data.length / 2; y++) {
+				var row = [];
+				var one = data[y*2];
+				var two = data[y*2+1];
+
+				for(var i=7;i >= 0;i--) {
+					row[i] = (one&1) | ((two&1) << 1);
+					one = one >> 1;
+					two = two >> 1;
+				}
+
+				result.push(row);
+			}
+
+			return result;
+		}
+
+		function format(n) {
+			n = n.toString(16);
+			return n.length<2 ? '0x0'+n : '0x'+n;
+		}
+
+		function encode(data) {
+			var result = [];
+
+			for(var y in data) {
+				var one = 0;
+				var two = 0;
+
+				for(var x in data[y]) {
+					one = one << 1;
+					two = two << 1;
+
+					if(data[y][x]&1) one++;
+					if(data[y][x]&2) two++;
+				}
+
+				result.push(format(one));
+				result.push(format(two));
+			}
+
+			return result;
+		}
+
+		function draw(ctx, data) {
+			for(var y in data)
+				for(var x in data[y]) {
+						ctx.fillStyle = colors[data[y][x]];
+						ctx.fillRect(x*tile, y*tile, tile, tile);
+				}
+		}
+
+		function selectColor(c) {
+			color = c;
+
+			var elements = document.getElementsByClassName('colorselect');
+			for(var i = 0; i < elements.length; i++)
+				elements[i].className = i==c ?  'colorselect active' : 'colorselect';
+		}
+	</script>
+</head>
+<body>
+
+<div id="colorpicker">
+	<div class="colorselect" style="background: white" onclick="selectColor(0)"></div>
+	<div class="colorselect" style="background: lightgrey" onclick="selectColor(1)"></div>
+	<div class="colorselect" style="background: darkgrey" onclick="selectColor(2)"></div>
+	<div class="colorselect" style="background: black" onclick="selectColor(3)"></div>
+</div>
+
+
+<canvas id="sprite" style="position: relative"></canvas>
+
+<pre id="output"></pre>
+
+
+<script>
+	var out = document.getElementById('output');
+	var canvas = document.getElementById('sprite');
+	var ctx = canvas.getContext("2d");
+	canvas.width = canvas.height = 8*tile;
+
+	var data = decode([
+		0x38,0x38,0x44,0x7C,0x83,0xFF,0x7C,0x00,
+		0x7C,0x08,0x7E,0x20,0x7C,0x1C,0x38,0x00
+	]);
+
+	selectColor(0);
+	draw(ctx, data);
+
+	canvas.onclick = function(evt) {
+		var x = (evt.layerX / tile) | 0;
+		var y = (evt.layerY / tile) | 0;
+		data[y][x] = color;
+		draw(ctx, data);
+
+		var raw = encode(data);
+		console.log(raw);
+		out.innerHTML = "unsigned char TileLabel[] = {\n\t";
+		for(var i =0; i < raw.length; i++) {
+			out.innerHTML += raw[i];
+			if(i<raw.length-1)
+				out.innerHTML += (i+1)%8 ? ", " : ",\n\t";
+		}
+		out.innerHTML += "\n};";
+	}
+</script>
+
+</body>
+</html>
