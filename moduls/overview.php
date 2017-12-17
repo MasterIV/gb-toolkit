@@ -18,7 +18,13 @@ if (!empty($_POST['file_name']) && in_array($_POST['file_type'], $types)) {
 
 	put($_POST['file_type'], $_POST['file_name'], [
 			'name' => $_POST['file_name'],
-			'data' => trim($spriteRow . "\n" . $spriteRow, ', ')
+			'data' => trim($spriteRow . "\n" . $spriteRow, ', '),
+			'headers' => ["void {$_POST['file_name']}()"],
+			'includes' => [
+					"#include <gb/gb.h>\n",
+					"#include <gb/drawing.h>\n",
+					"#include <rand.h>\n"
+			]
 	]);
 
 	throw new redirect('?modul=' . $_POST['file_type'] . '&id=' . $_POST['file_name']);
