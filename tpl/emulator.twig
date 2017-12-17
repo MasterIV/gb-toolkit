@@ -1,4 +1,4 @@
-<div class="emulator">
+{% if not error %}<div class="emulator">
 	<div class="C">
 
 		<canvas id="LCD" width="160" height="144" style="width: 480px; height: 432px;"></canvas>
@@ -45,3 +45,4 @@
 
 	</script>
 </div>
+{% endif %}
