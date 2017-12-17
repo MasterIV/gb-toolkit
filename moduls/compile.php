@@ -14,11 +14,29 @@ $view->js('emulator/jsgb.gameboy.js');
 
 $view->css('emulator/jsgb.styles.css');
 
-$path = PROJECTS_ROOT.'/'.$project;
-chdir($path);
-$result = shell_exec(COMPILER_PATH." -o $project.gb $project.c");
+$spec = array(
+		0 => array("pipe", "r"),  // stdin
+		1 => array("pipe", "w"),  // stdout
+		2 => array("pipe", "w"),  // stderr
+);
+
+chdir(PROJECT);
+$process = proc_open(COMPILER_PATH." -o $project.gb $project.c", $spec, $pipes);
 chdir(ROOT);
 
-$rom = $path.'/'.$project.'.gb';
+$stdout = stream_get_contents($pipes[1]);
+$stderr = stream_get_contents($pipes[2]);
+fclose($pipes[1]);
+fclose($pipes[2]);
+
+//preg_match()
+
+$error = preg_replace(
+		'/([\w\.]+).c\((\d+)\):error/',
+		'<a href="?modul=source&id=$1&line=$2">$0</a>',
+		$stderr);
+
+copy( PROJECT.$project.'.gb', 'roms/'.$project.'.gb');
+$view->assign('error', $error);
 $view->assign('template', 'emulator.twig');
-$view->assign('rom', $rom);
+$view->assign('rom', 'roms/'.$project.'.gb');

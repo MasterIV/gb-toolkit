@@ -1,0 +1,39 @@
+<form action="{{ action }}" name="editor" method="post">
+	<script type="text/javascript" src="codemirror/lib/codemirror.js"></script>
+	<script type="text/javascript" src="codemirror/mode/css/css.js"></script>
+	<script type="text/javascript" src="codemirror/mode/clike/clike.js"></script>
+	<script type="text/javascript" src="codemirror/addon/selection/active-line.js"></script>
+
+	<link rel="stylesheet" href="codemirror/lib/codemirror.css">
+	<style>
+		.CodeMirror {
+			border: 1px solid #eee;
+			height: auto;
+		}
+	</style>
+
+	<script language="javascript" type="text/javascript">
+		window.onload = function() {
+			var editor = CodeMirror.fromTextArea(document.getElementById("source"), {
+				lineNumbers: true,
+				mode: 'text/x-csrc',
+				tabSize:4,
+				indentWithTabs:true,
+				styleActiveLine: true,
+				autofocus:true
+			});
+
+			{% if line %}
+			editor.setCursor({line: {{ line }} - 1, char: 0 });
+			{% endif %}
+		};
+	</script>
+
+
+	<p class="btn-group">
+		<input type="submit" value="Save" class="btn btn-primary">
+	</p>
+
+	<textarea style="width:100%" rows="60" name="source" id="source">{{ source }}</textarea>
+
+</form>

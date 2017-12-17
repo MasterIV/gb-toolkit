@@ -22,8 +22,8 @@ canvas {
 	-ms-interpolation-mode: nearest-neighbor;   /* IE                            */
 }
 
-.emulator {
-	margin-left: 220px;
+#editor {
+	margin-left: 260px;
 }
 
 /* not sure where this is used */

@@ -1,0 +1,66 @@
+<style>
+	.colorselect span {
+		vertical-align: top;
+		display: inline-block;
+		width: 18px;
+		height: 18px;
+		cursor: pointer;
+		border: 1px solid black;
+	}
+
+	.colorselect.active {
+		border-color: red;
+	}
+
+	#thumbs canvas {
+		cursor: pointer;
+	}
+
+	#thumbs canvas.active {
+		border-color: red;
+	}
+
+	#canvas {
+		line-height: 1px;
+	}
+
+	#canvas canvas {
+		position: relative;
+	}
+
+	canvas, #output {
+		border: 1px solid black;
+		margin: -1px;
+	}
+</style>
+
+<script>
+	var editor;
+	$(function() {
+		editor = new SpriteEditor([{{ data }}]);
+	});
+</script>
+
+<p>
+	<butotn class="btn btn-primary" onclick="editor.save( '{{ action }}' )">Save</butotn>
+
+	<span class="btn-group">
+		<button class="colorselect btn" onclick="editor.color(0)"><span style="background: white"></span></button>
+		<button class="colorselect btn" onclick="editor.color(1)"><span style="background: lightgrey"></span></button>
+		<button class="colorselect btn" onclick="editor.color(2)"><span style="background: darkgrey"></span></button>
+		<button class="colorselect btn" onclick="editor.color(3)"><span style="background: black"></span></button>
+	</span>
+
+	<span class="btn-group">
+		<button class="dimension btn 1-1" onclick="editor.dimension(1, 1)">1x1</button>
+		<button class="dimension btn 1-2" onclick="editor.dimension(1, 2)">1x2</button>
+		<button class="dimension btn 2-2" onclick="editor.dimension(2, 2)">2x2</button>
+		<button class="dimension btn 3-3" onclick="editor.dimension(3, 3)">3x3</button>
+	</span>
+
+	<butotn class="btn" onclick="editor.add()"><span class="icon-plus"></span></butotn>
+</p>
+
+<div id="thumbs"></div>
+<div id="canvas"></div>
+

@@ -17,7 +17,7 @@
 	</noscript>
 
 	{% if error %}
-		<pre class="alert alert-error">{{ error }}</pre>
+		<pre class="alert alert-error">{{ error|raw }}</pre>
 	{% endif %}
 
 	{% if success %}
@@ -42,14 +42,20 @@
 			{% endfor %}
 		</div>
 
+		<div id="editor">
+			{% if template %}
+				{% include template %}
+			{% endif %}
+			{{ content|raw }}
+		</div>
+
+	{% else %}
+		{% if template %}
+			{% include template %}
+		{% endif %}
+
+		{{ content|raw }}
 	{% endif %}
-
-	{% if template %}
-		{% include template %}
-	{% endif %}
-
-
-	{{ content|raw }}
 </div>
 
 

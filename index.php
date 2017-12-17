@@ -25,14 +25,18 @@ if( $user ) {
 		$modul = 'projects';
 	} else {
 		$files = [];
+		define('PROJECT', PROJECTS_ROOT.'/'.$project.'/');
 
-		foreach(glob(PROJECTS_ROOT.'/'.$project.'/*.c') as $f) {
+		foreach(glob(PROJECT.'*.c') as $f) {
 			$content = file_get_contents($f);
 			$files[] = [
 					'type' => strpos($content, 'Tile Source File') ? 'sprite' : 'source',
 					'name' => substr( $f, 1+strrpos( $f, '/' ), -1*strlen(strrchr( $f, '.')))
 			];
 		}
+
+		if(!empty($_GET['id']) && (!preg_match('/^[-\w]+(\.[-\w]+)*$/', $_GET['id'] ) || !is_file( PROJECT.$_GET['id'].'.c' )))
+			throw new Exception('Invalid File!');
 
 		$view->assign('files', $files);
 	}
