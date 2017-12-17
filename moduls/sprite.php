@@ -18,7 +18,7 @@ if(!empty( $_POST['data'])) {
 	$view->format = 'plain';
 } else {
 	$data = file_get_contents(PROJECT.$_GET['id'].'.c');
-	preg_match('/\\[\\] = \\{(.+)\\};/is', $data, $matches);
+	preg_match('/\[\]\s*=\s*\{(.+)\};/is', $data, $matches);
 
 	$view->js('js/sprite_encoder.js');
 	$view->js('js/sprite_tile.js');
