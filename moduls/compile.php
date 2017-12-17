@@ -36,7 +36,9 @@ $error = preg_replace(
 		'<a href="?modul=source&id=$1&line=$2">$0</a>',
 		$stderr);
 
-copy( PROJECT.$project.'.gb', 'roms/'.$project.'.gb');
+if(empty($stderr))
+	copy( PROJECT.$project.'.gb', 'roms/'.$project.'.gb');
+
 $view->assign('error', $error);
 $view->assign('template', 'emulator.twig');
 $view->assign('rom', 'roms/'.$project.'.gb');
