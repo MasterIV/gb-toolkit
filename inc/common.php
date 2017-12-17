@@ -34,7 +34,7 @@ if( get_magic_quotes_gpc()) {
 
 // Funktion
 require 'inc/functions.php';
-require 'inc/settings.php';
+require 'inc/settings.config.php';
 
 try {
 	// Datenbankverbindung herstellen
