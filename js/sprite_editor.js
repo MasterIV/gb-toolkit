@@ -3,7 +3,7 @@ function SpriteEditor(data) {
 	var self  = this;
 
 	var total = 0;
-	var dimension = JSON.parse(localStorage.dimension) || [1, 1];
+	var dimension = JSON.parse(localStorage.dimension || '[1, 1]');
 	var selected = 0;
 
 	var canvasSpace = $('#canvas');
