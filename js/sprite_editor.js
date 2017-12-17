@@ -87,4 +87,8 @@ function SpriteEditor(data) {
 
 	this.color(0);
 	this.dimension(dimension[0], dimension[1]);
+	this.draw = false;
+
+	document.onmousedown = function() { self.draw = true; };
+	document.onmouseup = function() { self.draw = false; };
 }

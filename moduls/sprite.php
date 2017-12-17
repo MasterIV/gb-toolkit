@@ -26,5 +26,7 @@ if(!empty( $_POST['data'])) {
 
 	$view->assign('template', 'sprite.twig');
 	$view->assign('data', $matches[1]);
+	$view->assign('action', '?modul=sprite&id='.$_GET['id']);
+	$view->assign('code', '?modul=source&id='.$_GET['id']);
 }
 

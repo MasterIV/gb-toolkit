@@ -6,7 +6,9 @@ function SpriteTile(data, editor) {
 
 	this.canvas = document.createElement('canvas');
 	this.canvas.width = this.canvas.height = size * 8;
-	this.canvas.onclick = paint;
+
+	this.canvas.onmousemove = paint;
+	this.canvas.onmousedown = paint;
 
 	this.thumb = document.createElement('canvas');
 	this.thumb.width = this.thumb.height = small * 8;
@@ -15,6 +17,7 @@ function SpriteTile(data, editor) {
 	var ttx = this.thumb.getContext('2d');
 
 	function paint(evt) {
+		if(!editor.draw) return;
 		var x = (evt.layerX / size) | 0;
 		var y = (evt.layerY / size) | 0;
 		data[y][x] = editor.brushColor;
