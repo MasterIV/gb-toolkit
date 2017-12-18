@@ -6,8 +6,8 @@ define( 'IV_SELF', 'index.php?' );
 define( 'ROOT', __DIR__ );
 
 // User ermitteln
-if( !$user = $session->relogin( 2 ))
-	$user = $session->user( 2 );
+if( !$user = $session->relogin())
+	$user = $session->user();
 
 // template loader
 $loader = new template_loader( 'tpl' );
