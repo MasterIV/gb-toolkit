@@ -29,8 +29,15 @@ if( $user ) {
 
 		foreach(glob(PROJECT.'*.{c,map}', GLOB_BRACE) as $f) {
 			$content = file_get_contents($f);
+		
+			$fileType = 'source';
+			if(strrchr($f, '.') == '.map')
+				$fileType = 'map';
+			if(strpos($content, 'Tile Source File')) 
+				$fileType = 'sprite';
+			   
 			$files[] = [
-					'type' => strpos($content, 'Tile Source File') ? 'sprite' : 'source',
+					'type' => $fileType,
 					'name' => substr( $f, 1+strrpos( $f, '/' ), -1*strlen(strrchr( $f, '.')))
 			];
 		}
