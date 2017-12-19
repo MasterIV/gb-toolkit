@@ -27,7 +27,7 @@ if( $user ) {
 		$files = [];
 		define('PROJECT', PROJECTS_ROOT.'/'.$project.'/');
 
-		foreach(glob(PROJECT.'*.c') as $f) {
+		foreach(glob(PROJECT.'*.{c,map}', GLOB_BRACE) as $f) {
 			$content = file_get_contents($f);
 			$files[] = [
 					'type' => strpos($content, 'Tile Source File') ? 'sprite' : 'source',
