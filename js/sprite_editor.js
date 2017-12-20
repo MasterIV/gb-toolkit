@@ -78,7 +78,7 @@ function SpriteEditor(data) {
 	};
 
 	this.save = function (url) {
-		$.post(url, {data: encoder.encode(raw)});
+		$.post(url, {data: JSON.stringify(encoder.encode(raw))});
 	};
 
 	this.add = function () {

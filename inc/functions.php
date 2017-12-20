@@ -54,6 +54,7 @@ function userid() {
  * @return string
  */
 function encode_image_data($raw) {
+	$raw = json_decode($raw);
 	$data = "\t";
 	$total = count($raw);
 

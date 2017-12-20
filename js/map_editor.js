@@ -77,7 +77,7 @@ function MapEditor(w, h, tiles, raw) {
 				bgmap.push(formatImageData(data[y][x]));
 
 		$.post(url, {
-			data: bgmap,
+			data: JSON.stringify(bgmap),
 			w: w,
 			h: h,
 			tiles: tiles
