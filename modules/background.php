@@ -6,7 +6,7 @@ if(isset($_GET['tiles'])) {
 	$view->content('['.$matches[1].']');
 	$view->format = 'plain';
 } elseif (!empty($_POST['data'])) {
-	$tpl = template('code/sprite.tiles');
+	$tpl = template('code/background.map');
 	file_put_contents(PROJECT . $id, $tpl->render([
 			'name' => substr($id, 0, strrpos($id, '.')),
 			'data' => encode_image_data($_POST['data']),
