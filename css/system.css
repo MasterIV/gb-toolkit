@@ -22,6 +22,10 @@ canvas {
 	-ms-interpolation-mode: nearest-neighbor;   /* IE                            */
 }
 
+#editor {
+	margin-left: 260px;
+}
+
 /* Image editor styles */
 
 #canvas, #thumbs {
