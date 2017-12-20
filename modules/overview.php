@@ -24,5 +24,5 @@ if (!empty($_POST['file_name']) && !empty($extensions[$_POST['file_type']])) {
 
 	throw new redirect('?modul=' . $_POST['file_type'] . '&id=' . $id);
 } else {
-	throw new redirect('?modul=source&id=' . $project);
+	throw new redirect('?modul=source&id=' . $project . '.c');
 }
