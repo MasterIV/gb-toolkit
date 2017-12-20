@@ -1,9 +1,10 @@
-function SpriteEncoder() {
-	function format(n) {
-		n = n.toString(16);
-		return n.length < 2 ? '0x0' + n : '0x' + n;
-	}
+function formatImageData(n) {
+	n = n.toString(16);
+	return n.length < 2 ? '0x0' + n : '0x' + n;
+}
 
+
+function SpriteEncoder() {
 	function decodeTile(data) {
 		var result = [];
 
@@ -37,8 +38,8 @@ function SpriteEncoder() {
 				if (data[y][x] & 2) two++;
 			}
 
-			result.push(format(one));
-			result.push(format(two));
+			result.push(formatImageData(one));
+			result.push(formatImageData(two));
 		}
 	}
 

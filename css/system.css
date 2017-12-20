@@ -22,8 +22,22 @@ canvas {
 	-ms-interpolation-mode: nearest-neighbor;   /* IE                            */
 }
 
-#editor {
-	margin-left: 260px;
+/* Image editor styles */
+
+#canvas, #thumbs {
+	line-height: 1px;
+	margin-bottom: 15px;
+}
+
+#canvas canvas, #thumbs canvas {
+	position: relative;
+	cursor: pointer;
+	border: 1px solid black;
+	margin: -1px;
+}
+
+#thumbs canvas.active {
+	border-color: red;
 }
 
 /* not sure where this is used */

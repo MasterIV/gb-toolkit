@@ -12,45 +12,48 @@ if( !$user = $session->relogin())
 // template loader
 $loader = new template_loader( 'tpl' );
 
+$types = [
+		'.c' => 'source',
+		'.map' => 'background',
+		'.tiles' => 'sprite'
+];
+
+
 if( $user ) {
 	$view = new view('main');
-	$modul = $_GET['modul'];
+	$module = $_GET['modul'];
 	$project = $session->project;
 
 
-	if( !preg_match('/^[-\w]+(\.[-\w]+)*$/', $modul ) || !is_file( 'moduls/'.$modul.'.php' ))
-		$modul = 'projects';
+	if( !preg_match('/^[-\w]+(\.[-\w]+)*$/', $module ) || !is_file( 'modules/'.$module.'.php' ))
+		$module = 'projects';
 
 	if(empty($project) || !is_dir(PROJECTS_ROOT.'/'.$project)) {
-		$modul = 'projects';
+		$module = 'projects';
 	} else {
-		$files = [];
 		define('PROJECT', PROJECTS_ROOT.'/'.$project.'/');
+		$files = [];
 
-		foreach(glob(PROJECT.'*.{c,map}', GLOB_BRACE) as $f) {
-			$content = file_get_contents($f);
-		
-			$fileType = 'source';
-			if(strrchr($f, '.') == '.map')
-				$fileType = 'map';
-			if(strpos($content, 'Tile Source File')) 
-				$fileType = 'sprite';
-			   
-			$files[] = [
-					'type' => $fileType,
-					'name' => substr( $f, 1+strrpos( $f, '/' ), -1*strlen(strrchr( $f, '.')))
-			];
+		foreach(glob(PROJECT.'*', GLOB_BRACE) as $f) {
+			$extension = strrchr($f, '.');
+			if(isset($types[$extension])) {
+				$fileType = $types[$extension];
+				$files[$fileType][] = substr( $f, 1+strrpos( $f, '/' ));
+			}
 		}
 
-		if(!empty($_GET['id']) && (!preg_match('/^[-\w]+(\.[-\w]+)*$/', $_GET['id'] ) || !is_file( PROJECT.$_GET['id'].'.c' )))
+		$id = $_GET['id'];
+		if(!empty($id) && (!preg_match('/^[-\w]+(\.[-\w]+)*$/', $id ) || !is_file( PROJECT.$id )))
 			throw new Exception('Invalid File!');
 
 		$view->assign('files', $files);
+		$view->assign('current', $id);
+		$view->assign('module', $module);
 	}
 
 
 	try {
-		include( 'moduls/'.$modul.'.php' );
+		include( 'modules/'.$module.'.php' );
 		$view->content( ob_get_clean());
 		$view->display();
 	} catch( redirect $e ) {

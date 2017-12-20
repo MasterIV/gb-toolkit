@@ -32,14 +32,19 @@
 			</div>
 			<br><br>
 
-			{% for file in files %}
-				<div>
-					<a href="?modul={{ file.type }}&id={{  file.name }}">
-						<img src="img/file_{{ file.type }}.png">
-						{{ file.name }}
-					</a>
-				</div>
-			{% endfor %}
+			<ul class="nav nav-list">
+				{% for type, names in files %}
+					<li class="nav-header">{{ type }}</li>
+					{% for name in names %}
+						<li {% if current==name %}class="active"{% endif %}>
+							<a href="?modul={{ type }}&id={{ name }}">
+								<img src="img/file_{{ type }}.png">
+								{{ name }}
+							</a>
+						</li>
+					{% endfor %}
+				{% endfor %}
+			</ul>
 		</div>
 
 		<div id="editor">
@@ -80,6 +85,7 @@
 					<select class="input-xlarge"  id="inputType" name="file_type">
 						<option value="source">Source</option>
 						<option value="sprite">Sprite</option>
+						<option value="background">Background</option>
 					</select>
 				</div>
 			</div>

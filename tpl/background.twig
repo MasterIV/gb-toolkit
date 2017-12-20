@@ -1,0 +1,59 @@
+<style>
+	.input-append {
+		display: inline-block;
+		vertical-align: top;
+		margin-right: 8px;
+	}
+
+	.input-append input {
+		margin-left: -1px;
+	}
+
+	#save, .btn-group {
+		margin-right: 8px;
+	}
+
+	.input-mini {
+		width: 30px;
+	}
+</style>
+
+<script>
+	var editor;
+	$(function() {
+		editor = new MapEditor({{ dimensions[0] }}, {{ dimensions[1] }}, '{{ tiles }}', [{{ data }}]);
+	});
+</script>
+
+<div style="margin-bottom: 12px">
+	<butotn class="btn btn-primary" id="save" onclick="editor.save( '{{ action }}' )">Save</butotn>
+
+	<div class="input-append input-prepend">
+		<span class="add-on">Size</span>
+		<input type="text" class="input-mini" id="width" value="{{ dimensions[0] }}">
+		<input type="text" class="input-mini" id="height" value="{{ dimensions[1] }}">
+		<button class="btn" onclick="editor.resize($('#width').val(), $('#height').val())">Change</button>
+	</div>
+
+	<div class="input-append input-prepend">
+		<span class="add-on">Tiles</span>
+		<select name="tiles" id="tiles" class="input-medium">
+			{% for tile in files.sprite %}
+			<option value="{{ tile }}"{% if tile==tiles %} selected{% endif %}>{{ tile }}</option>
+			{% endfor %}
+		</select>
+		<button class="btn" onclick="editor.setTiles($('#tiles').val());">Change</button>
+	</div>
+
+	<span class="btn-group">
+		<button class="dimension btn 1-1" onclick="editor.brush(1, 1)">1x1</button>
+		<button class="dimension btn 1-2" onclick="editor.brush(1, 2)">1x2</button>
+		<button class="dimension btn 2-2" onclick="editor.brush(2, 2)">2x2</button>
+		<button class="dimension btn 3-3" onclick="editor.brush(3, 3)">3x3</button>
+	</span>
+
+	<a href="{{ code }}" class="btn">Code</a>
+</div>
+
+<div id="thumbs"></div>
+<div id="canvas"></div>

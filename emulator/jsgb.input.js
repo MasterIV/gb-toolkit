@@ -38,13 +38,13 @@ function gb_OnKeyDown_Event(e) {
     // right
     case 39: gbPin14&=0xFE; MEMW(_IF_,gbRegIF|16); e.preventDefault(); return;    
     // start
-    case 65: gbPin15&=0xF7; MEMW(_IF_,gbRegIF|16); e.preventDefault(); return;
+    case 65: gbPin15&=0xF7; MEMW(_IF_,gbRegIF|16); return;
     // select
-    case 83: gbPin15&=0xFB; MEMW(_IF_,gbRegIF|16); e.preventDefault(); return;
+    case 83: gbPin15&=0xFB; MEMW(_IF_,gbRegIF|16); return;
     // button B
-    case 90: gbPin15&=0xFD; MEMW(_IF_,gbRegIF|16); e.preventDefault(); return;
+    case 90: gbPin15&=0xFD; MEMW(_IF_,gbRegIF|16); return;
     // button A
-    case 88: gbPin15&=0xFE; MEMW(_IF_,gbRegIF|16); e.preventDefault(); return;
+    case 88: gbPin15&=0xFE; MEMW(_IF_,gbRegIF|16); return;
   }
 }
 
@@ -59,13 +59,13 @@ function gb_OnKeyUp_Event(e) {
     // right
     case 39: gbPin14|=1; MEMW(_IF_,gbRegIF|16); e.preventDefault(); return;
     // start
-    case 65: gbPin15|=8; MEMW(_IF_,gbRegIF|16); e.preventDefault(); return;
+    case 65: gbPin15|=8; MEMW(_IF_,gbRegIF|16); return;
     // select
-    case 83: gbPin15|=4; MEMW(_IF_,gbRegIF|16); e.preventDefault(); return;
+    case 83: gbPin15|=4; MEMW(_IF_,gbRegIF|16); return;
     // button B
-    case 90: gbPin15|=2; MEMW(_IF_,gbRegIF|16); e.preventDefault(); return;
+    case 90: gbPin15|=2; MEMW(_IF_,gbRegIF|16); return;
     // button A
-    case 88: gbPin15|=1; MEMW(_IF_,gbRegIF|16); e.preventDefault(); return;
+    case 88: gbPin15|=1; MEMW(_IF_,gbRegIF|16); return;
   }
 }
 

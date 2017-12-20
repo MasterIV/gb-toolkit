@@ -49,3 +49,18 @@ function user() {
 function userid() {
 	return $GLOBALS['user'];
 }
+
+/**
+ * @return string
+ */
+function encode_image_data($raw) {
+	$data = "\t";
+	$total = count($raw);
+
+	foreach ($raw as $i => $d) {
+		$data .= $d;
+		if ($i < $total - 1)
+			$data .= ($i + 1) % 8 == 0 ? ",\n\t" : ", ";
+	}
+	return $data;
+}
