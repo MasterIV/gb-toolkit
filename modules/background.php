@@ -11,7 +11,7 @@ if(isset($_GET['tiles'])) {
 			'name' => substr($id, 0, strrpos($id, '.')),
 			'data' => encode_image_data($_POST['data']),
 			'tiles' => $_POST['tiles'],
-			'dimensions' => $_POST['data'] . ',' . $_POST['data']
+			'dimensions' => $_POST['w'] . ',' . $_POST['h']
 	]));
 
 	$view->format = 'plain';
