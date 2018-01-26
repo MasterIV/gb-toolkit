@@ -6,6 +6,13 @@ class view {
 	protected $content = array();
 	protected $file;
 
+	/**
+	 * @param mixed $file
+	 */
+	public function setFile($file) {
+		$this->file = $file;
+	}
+
 	public function __construct($file) {
 		$this->file = $file;
 

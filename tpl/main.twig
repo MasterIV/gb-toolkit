@@ -28,7 +28,9 @@
 		<div class="pull-left well files">
 			<div class="btn-group">
 				<a class="btn btn-success" href="?modul=compile"><span class="icon-play icon-white"></span> Compile & Run</a>
+				{% if writable %}
 				<a class="btn" href="#newFileModal" data-toggle="modal"><span class="icon-plus"></span> New</span></a>
+				{% endif %}
 			</div>
 			<br><br>
 
@@ -47,7 +49,8 @@
 			</ul>
 
 			<br>
-			<a class="btn" href="?" style="width: 180px">Projects</a>
+			<p><a class="btn" href="?modul=overview" style="width: 180px">Settings</a></p>
+			<p><a class="btn" href="?" style="width: 180px">Projects</a></p>
 		</div>
 
 		<div id="editor">

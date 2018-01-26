@@ -26,7 +26,9 @@
 </script>
 
 <div style="margin-bottom: 12px">
+	{% if writable %}
 	<butotn class="btn btn-primary" id="save" onclick="editor.save( '{{ action }}' )">Save</butotn>
+	{% endif %}
 
 	<div class="input-append input-prepend">
 		<span class="add-on">Size</span>

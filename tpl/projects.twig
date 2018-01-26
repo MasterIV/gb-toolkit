@@ -1,43 +1,83 @@
-<div class="modal" style="top: 22px">
-	<div class="modal-header">
-		<h3>Projects</h3>
-	</div>
+<!DOCTYPE html>
+<html lang="de">
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
+	<title>Cloud GameBoy</title>
 
-	<div class="modal-body">
-		<h4>Open Project</h4>
+	{% for file in js %}<script type="text/javascript" src="{{ file }}"></script>{% endfor %}
+	{% for file in css %}<link rel="stylesheet" href="{{ file }}" type="text/css" />{% endfor %}
+</head>
 
-		<ul>
-		{% for project in projects %}
-			<li><a href="?project={{ project }}" class="project">{{ project }}</a></li>
-		{% endfor %}
-		</ul>
+<body>
 
+<div id="content">
+	<noscript>
+		<div class="alert alert-error">Bitte Javascript aktivieren!</div>
+	</noscript>
 
-		<hr>
-		<h4>Create Project</h4>
+	{% if error %}
+		<pre class="alert alert-error">{{ error|raw }}</pre>
+	{% endif %}
 
-		<form method="post">
+	{% if success %}
+		<pre class="alert alert-success">{{ success }}</pre>
+	{% endif %}
 
-			<div class="control-group">
-				<label class="control-label" for="inputName">Name</label>
-				<div class="controls">
-					<input class="input-xlarge" type="text" id="inputName" placeholder="Name" name="project_name">
-				</div>
+	<form method="post" action="?">
+		<div class="modal" style="top: 22px">
+			<div class="modal-header">
+				<h3>Projects</h3>
 			</div>
 
-			<div class="control-group">
-				<label class="control-label" for="inputDescription">Description</label>
-				<div class="controls">
-					<textarea class="input-xlarge"  id="inputDescription" placeholder="Description" name="project_description"></textarea>
+			<div class="modal-body">
+				<h4>Open Project</h4>
+
+				<ul>
+					{% for project in projects %}
+						<li><a href="?project={{ project.id }}" class="project">{{ project.name }}</a></li>
+					{% endfor %}
+				</ul>
+
+
+				<hr>
+				<h4>Create Project</h4>
+
+
+				<div class="control-group">
+					<label class="control-label" for="inputName">Name</label>
+					<div class="controls">
+						<input class="input-xlarge" type="text" id="inputName" placeholder="Name" name="project_name">
+					</div>
 				</div>
+
+				<div class="control-group">
+					<label class="control-label" for="inputTemplate">Template</label>
+					<div class="controls">
+						<select class="input-xlarge" type="text" id="inputTemplate" placeholder="Name" name="project_template">
+							{% for t in templates %}
+								<option value="{{ t }}">{{ t }}</option>{% endfor %}
+						</select>
+					</div>
+				</div>
+
+				<div class="control-group">
+					<label class="control-label" for="inputDescription">Description</label>
+					<div class="controls">
+						<textarea class="input-xlarge" id="inputDescription" placeholder="Description"
+						          name="project_description"></textarea>
+					</div>
+				</div>
+
+
 			</div>
 
-		</form>
-
-
-	</div>
-
-	<div class="modal-footer">
-		<button type="submit" class="btn btn-primary">Login</button>
-	</div>
+			<div class="modal-footer">
+				<button type="submit" class="btn btn-primary">Create Project</button>
+			</div>
+		</div>
+	</form>
 </div>
+
+</body>
+</html>

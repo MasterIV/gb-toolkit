@@ -29,10 +29,11 @@
 		};
 	</script>
 
-
+{% if writable %}
 	<p class="btn-group">
 		<input type="submit" value="Save" id="save" class="btn btn-primary">
 	</p>
+{% endif %}
 
 	<textarea style="width:100%" rows="60" name="source" id="source">{{ source }}</textarea>
 

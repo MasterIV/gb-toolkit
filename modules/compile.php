@@ -21,7 +21,7 @@ $spec = array(
 );
 
 chdir(PROJECT);
-$process = proc_open(COMPILER_PATH." -o $project.gb $project.c", $spec, $pipes);
+$process = proc_open(COMPILER_PATH." -o {$project['name']}.gb {$project['name']}.c", $spec, $pipes);
 chdir(ROOT);
 
 $stdout = stream_get_contents($pipes[1]);
@@ -37,8 +37,8 @@ $error = preg_replace(
 		$stderr);
 
 if(empty($stderr))
-	copy( PROJECT.$project.'.gb', 'roms/'.$project.'.gb');
+	copy( PROJECT.$project['name'].'.gb', 'roms/'.$project['name'].'.gb');
 
 $view->assign('error', $error);
 $view->assign('template', 'emulator.twig');
-$view->assign('rom', 'roms/'.$project.'.gb');
+$view->assign('rom', 'roms/'.$project['name'].'.gb');

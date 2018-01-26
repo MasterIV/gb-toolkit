@@ -22,18 +22,24 @@ $types = [
 if( $user ) {
 	$view = new view('main');
 	$module = $_GET['modul'];
-	$project = $session->project;
 
-
-	if( !preg_match('/^[-\w]+(\.[-\w]+)*$/', $module ) || !is_file( 'modules/'.$module.'.php' ))
+	if( !valid_name( $module ) || !is_file( 'modules/'.$module.'.php' ))
 		$module = 'projects';
 
-	if(empty($project) || !is_dir(PROJECTS_ROOT.'/'.$project)) {
+	// try to load project
+	if($session->project)
+		$project = db()->query("SELECT p.*, c.rights FROM projects p 
+				LEFT JOIN collaborators c ON c.project = p.id
+				WHERE p.id = %d AND (p.owner = %d OR c.user = %d)",
+				$session->project, $user->id, $user->id)->assoc();
+
+	if(empty($project) || !is_dir(PROJECTS_ROOT.'/'.$project['name'])) {
 		$module = 'projects';
 	} else {
-		define('PROJECT', PROJECTS_ROOT.'/'.$project.'/');
+		define('PROJECT', PROJECTS_ROOT.'/'.$project['name'].'/');
 		$files = [];
 
+		// load project files
 		foreach(glob(PROJECT.'*', GLOB_BRACE) as $f) {
 			$extension = strrchr($f, '.');
 			if(isset($types[$extension])) {
@@ -42,15 +48,22 @@ if( $user ) {
 			}
 		}
 
+		// check current file
 		$id = $_GET['id'];
-		if(!empty($id) && (!preg_match('/^[-\w]+(\.[-\w]+)*$/', $id ) || !is_file( PROJECT.$id )))
+		if(!empty($id) && (!valid_name($id) || !is_file( PROJECT.$id )))
 			throw new Exception('Invalid File!');
 
+		// check write permission
+		$write_permission = $user->id == $project['owner'] || $project['rights'];
+		if(!empty($_POST) && $module != 'projects' && !$write_permission)
+			throw new exception_user('No permissions to modify project, please contact project owner.');
+
+		// assign template variables
 		$view->assign('files', $files);
 		$view->assign('current', $id);
 		$view->assign('module', $module);
+		$view->assign('writable', $write_permission);
 	}
-
 
 	try {
 		include( 'modules/'.$module.'.php' );
