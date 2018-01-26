@@ -18,7 +18,6 @@ $types = [
 		'.tiles' => 'sprite'
 ];
 
-
 if( $user ) {
 	$view = new view('main');
 	$module = $_GET['modul'];
@@ -97,6 +96,29 @@ if( $user ) {
 			header( 'LOCATION: index.php' );
 			exit();
 		}
+
+	if(!empty($_POST['register_name']) && !empty($_POST['register_pass'])) {
+		$name = $_POST['register_name'];
+
+		if( !preg_match('/^[-\w]+$/', $name) || db()->user_data->name( $name ))
+			$view->error('Invalid Username!');
+		elseif($_POST['register_pass'] != $_POST['register_repeat'])
+			$view->error('Password and repetition do not match!');
+		else {
+			$db->insert('user_data', array(
+					'name' => $name,
+					'email' => $_POST['register_mail'],
+					'pass_salt' => $salt = uniqid(),
+					'pass_hash' => md5($salt . md5($_POST['register_pass'] . $salt)),
+					'type' => 7
+			));
+
+			$session->login($name, $_POST['register_pass'], true);
+			header( 'LOCATION: index.php' );
+			exit();
+		}
+
+	}
 
 	$view->display();
 }

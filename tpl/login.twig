@@ -7,6 +7,7 @@
 
 		{% for file in js %}<script type="text/javascript" src="{{ file }}"></script>{% endfor %}
 		{% for file in css %}<link rel="stylesheet" href="{{ file }}" type="text/css" />{% endfor %}
+		<style>.modal { position: relative; } body { margin-top: 100px}</style>
 	</head>
 
 	<body>
@@ -44,6 +45,48 @@
 
 				<div class="modal-footer">
 							<button type="submit" class="btn btn-primary">Login</button>
+				</div>
+			</div>
+		</form>
+
+		<form class="form-horizontal" action="{{ submit_url }}" method="post">
+			<div class="modal">
+				<div class="modal-header">
+					<h3>Create Account</h3>
+				</div>
+
+				<div class="modal-body">
+					<div class="control-group">
+						<label class="control-label" for="regName">Name</label>
+						<div class="controls">
+							<input type="text" id="regName" placeholder="Name" name="register_name">
+						</div>
+					</div>
+
+					<div class="control-group">
+						<label class="control-label" for="regPass">Password</label>
+						<div class="controls">
+							<input type="password" id="regPass" placeholder="Password" name="register_pass">
+						</div>
+					</div>
+
+					<div class="control-group">
+						<label class="control-label" for="regRep">Repeat Password</label>
+						<div class="controls">
+							<input type="password" id="regRep" placeholder="Password" name="register_repeat">
+						</div>
+					</div>
+
+					<div class="control-group">
+						<label class="control-label" for="regMail">E-Mail</label>
+						<div class="controls">
+							<input type="text" id="regMail" placeholder="E-Mail" name="register_mail">
+						</div>
+					</div>
+				</div>
+
+				<div class="modal-footer">
+					<button type="submit" class="btn btn-primary">Register</button>
 				</div>
 			</div>
 		</form>

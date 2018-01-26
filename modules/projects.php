@@ -12,7 +12,7 @@ if(!empty($_POST['project_name']) && !empty($_POST['project_template'])) {
 
 	if(!in_array($tpl, $templates))
 		throw new exception_user("Invalid Project template");
-	if( !preg_match('/^[-\w]+$/', $name) || in_array($name, $projects))
+	if( !preg_match('/^[-\w]+$/', $name) || db()->projects->name($name))
 		throw new exception_user('Invalid Project Name!');
 
 	 db()->insert('projects', [
@@ -35,7 +35,7 @@ if(!empty($project) && isset($projects[$project])) {
 	throw new redirect('?modul=overview');
 }
 
-$view->assign('projects', db()->get('projects', 'owner = '.$user->id));
+$view->assign('projects', $projects);
 $view->assign('templates', $templates);
 $view->setFile( 'projects' );
 

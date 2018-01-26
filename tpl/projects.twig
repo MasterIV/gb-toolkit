@@ -31,6 +31,7 @@
 			</div>
 
 			<div class="modal-body">
+				{% if projects %}
 				<h4>Open Project</h4>
 
 				<ul>
@@ -39,8 +40,10 @@
 					{% endfor %}
 				</ul>
 
-
 				<hr>
+				{% endif %}
+
+
 				<h4>Create Project</h4>
 
 

@@ -48,5 +48,8 @@ try {
 $session = new session_iv( 'IVSESSID' );
 
 // Sitzung beenden
-if( isset( $_GET['logout'] ))
+if( isset( $_GET['logout'] )) {
 	$session->logout();
+	header( 'LOCATION: index.php' );
+	exit();
+}
