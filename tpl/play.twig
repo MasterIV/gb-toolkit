@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
+	<title>Cloud GameBoy</title>
+
+	{% for file in js %}<script type="text/javascript" src="{{ file }}"></script>{% endfor %}
+	{% for file in css %}<link rel="stylesheet" href="{{ file }}" type="text/css" />{% endfor %}
+</head>
+
+<body>
+
+<div id="content">
+	{% include "emulator.twig" %}
+</div>
+
+</body>
+</html>
