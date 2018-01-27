@@ -27,6 +27,7 @@ if(!empty($_POST['project_name']) && !empty($_POST['project_template'])) {
 
 	rename(PROJECTS_ROOT.'/'.$name.'/'.$tpl.'.c', PROJECTS_ROOT.'/'.$name.'/'.$name.'.c');
 	$project = db()->insert_id;
+    $projects[$project] = [];
 }
 
 $project = $_GET['project'];

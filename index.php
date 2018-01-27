@@ -78,7 +78,7 @@ if( $user ) {
 	} catch( exception_user $e ) {
 		ob_end_clean();
 		$view->error($e->getMessage());
-		$view->content('<p align="center"><button class="btn" onclick="window.history.back()">Zurück</button></p>');
+		$view->content('<p align="center"><button class="btn" onclick="window.history.back()">Back</button></p>');
 		$view->display();
 	} catch( Exception $e ) {
 		ob_end_clean();
