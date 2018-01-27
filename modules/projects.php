@@ -1,5 +1,6 @@
 <?php
 
+$project = $_GET['project'];
 $templates = globFiles('templates/*');
 $projects = db()->query("SELECT p.*, c.rights FROM projects p 
 				LEFT JOIN collaborators c ON c.project = p.id
@@ -27,10 +28,9 @@ if(!empty($_POST['project_name']) && !empty($_POST['project_template'])) {
 
 	rename(PROJECTS_ROOT.'/'.$name.'/'.$tpl.'.c', PROJECTS_ROOT.'/'.$name.'/'.$name.'.c');
 	$project = db()->insert_id;
-    $projects[$project] = [];
+	$projects[$project] = [];
 }
 
-$project = $_GET['project'];
 if(!empty($project) && isset($projects[$project])) {
 	$session->project = $project;
 	throw new redirect('?modul=overview');

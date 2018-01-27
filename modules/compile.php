@@ -32,7 +32,7 @@ fclose($pipes[2]);
 //preg_match()
 
 $error = preg_replace(
-		'/([\w\.]+).c\((\d+)\):error/',
+		'/([\w\.]+.c)\((\d+)\):error/',
 		'<a href="?modul=source&id=$1&line=$2">$0</a>',
 		$stderr);
 

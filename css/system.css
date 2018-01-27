@@ -76,3 +76,7 @@ canvas {
 .controls > .btn {
 	margin-right: 10px;
 }
+
+.modal-body {
+	max-height: none;
+}
