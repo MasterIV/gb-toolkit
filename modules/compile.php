@@ -14,22 +14,44 @@ $view->js('emulator/jsgb.gameboy.js');
 
 $view->css('emulator/jsgb.styles.css');
 
-$spec = array(
-		0 => array("pipe", "r"),  // stdin
-		1 => array("pipe", "w"),  // stdout
-		2 => array("pipe", "w"),  // stderr
-);
+function execute( $cmd ) {
+	$spec = array(
+			0 => array("pipe", "r"),  // stdin
+			1 => array("pipe", "w"),  // stdout
+			2 => array("pipe", "w"),  // stderr
+	);
 
+	$process = proc_open($cmd, $spec, $pipes);
+
+	$stdout = stream_get_contents($pipes[1]);
+	$stderr = stream_get_contents($pipes[2]);
+
+	fclose($pipes[1]);
+	fclose($pipes[2]);
+	proc_close($process);
+
+	return $stdout.$stderr;
+}
+
+$settings = json_decode($project['settings'], true);
 chdir(PROJECT);
-$process = proc_open(COMPILER_PATH." -o {$project['name']}.gb {$project['name']}.c", $spec, $pipes);
+
+if(!empty($settings['banks'])) {
+	$error = execute(COMPILER_PATH." -Wa-l -Wl-m -Wl-j -c -o main.o {$project['name']}.c");
+	$files = "main.o";
+
+	for($i=1; $i <= $settings['banks']; $i++) {
+		$error .= execute(COMPILER_PATH." -Wa-l -Wl-m -Wl-j -Wf-bo{$i} -c -o bank{$i}.o bank{$i}.c");
+		$files .= " bank{$i}.o";
+	}
+
+	$error .= execute(COMPILER_PATH." -Wa-l -Wl-m -Wl-j -Wl-yt0x01 -Wl-yo4 -o {$project['name']}.gb {$files}");
+	unlink($project['name'].'.map');
+} else {
+	$error = execute(COMPILER_PATH." -o {$project['name']}.gb {$project['name']}.c");
+}
+
 chdir(ROOT);
-
-$stdout = stream_get_contents($pipes[1]);
-$stderr = stream_get_contents($pipes[2]);
-fclose($pipes[1]);
-fclose($pipes[2]);
-
-//preg_match()
 
 $error = preg_replace(
 		'/([\w\.]+.c)\((\d+)\):error/',
