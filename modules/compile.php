@@ -46,7 +46,8 @@ if(!empty($settings['banks'])) {
 	}
 
 	$error .= execute(COMPILER_PATH." -Wa-l -Wl-m -Wl-j -Wl-yt0x01 -Wl-yo4 -o {$project['name']}.gb {$files}");
-	unlink($project['name'].'.map');
+	if(is_file($project['name'].'.map'))
+		unlink($project['name'].'.map');
 } else {
 	$error = execute(COMPILER_PATH." -o {$project['name']}.gb {$project['name']}.c");
 }
