@@ -36,6 +36,7 @@ if( $user ) {
 		$module = 'projects';
 	} else {
 		define('PROJECT', PROJECTS_ROOT.'/'.$project['name'].'/');
+		$settings = json_decode($project['settings'], true);
 		$files = [];
 
 		// load project files
@@ -62,6 +63,7 @@ if( $user ) {
 		$view->assign('current', $id);
 		$view->assign('module', $module);
 		$view->assign('writable', $write_permission);
+		$view->assign('settings', $settings);
 	}
 
 	try {

@@ -14,7 +14,12 @@
 
 	<script language="javascript" type="text/javascript">
 		window.onload = function() {
+
 			var editor = CodeMirror.fromTextArea(document.getElementById("source"), {
+			{% for k,v in settings.editor %}
+				{{ k }}: {{ v|number_format }},
+			{% endfor %}
+
 				lineNumbers: true,
 				mode: 'text/x-csrc',
 				tabSize:4,

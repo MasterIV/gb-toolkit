@@ -4,6 +4,17 @@ $extensions = array_flip($types);
 $rows = ['sprite' => 2, 'background' => 45];
 $owner = $project['owner']==$user->id;
 
+$defaults = [
+		'banks' => 0,
+		'editor' => [
+				'indentUnit' => 2,
+				'smartIndent' => true,
+				'tabSize' => 4,
+				'indentWithTabs' => false,
+				'electricChars' => true,
+		]
+];
+
 if (!empty($_POST['file_name']) && !empty($extensions[$_POST['file_type']])) {
 	$id = $_POST['file_name'] . $extensions[$_POST['file_type']];
 
@@ -60,6 +71,29 @@ if($owner) {
 	}
 }
 
+function filter_array($filter, $values) {
+	$result = [];
+
+	foreach($filter as $k => $v)
+		if(is_array($v))
+			$result[$k] = filter_array($v, $values[$k]);
+		elseif(is_bool($v))
+			$result[$k] = isset($values[$k]);
+		else
+			$result[$k] = intval($values[$k]);
+
+	return $result;
+}
+
+if(!empty($_POST['settings'])) {
+	db()->id_update('projects', [
+			'settings' => json_encode(filter_array($defaults, $_POST['settings']))
+	], $project['id']);
+
+	throw new redirect('?modul=overview');
+}
+
+if(empty($settings)) $settings = $defaults;
 
 $view->assign('template', 'settings.twig');
 $view->assign('project', $project);
@@ -68,3 +102,4 @@ $view->assign('owner', $owner);
 $view->assign('collaborators', db()->query("SELECT c.*, u.name
 		FROM collaborators c JOIN user_data u ON c.user = u.id
 		WHERE c.project = %d", $project['id'])->assocs());
+

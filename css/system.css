@@ -26,6 +26,12 @@ canvas {
 	margin-left: 260px;
 }
 
+.help-block {
+	color: darkgray;
+	font-size: 90%;
+	margin-left: 10px;
+}
+
 /* Image editor styles */
 
 #canvas, #thumbs {

@@ -26,14 +26,15 @@ function execute( $cmd ) {
 	$stdout = stream_get_contents($pipes[1]);
 	$stderr = stream_get_contents($pipes[2]);
 
+	fclose($pipes[0]);
 	fclose($pipes[1]);
 	fclose($pipes[2]);
+
 	proc_close($process);
 
 	return $stdout.$stderr;
 }
 
-$settings = json_decode($project['settings'], true);
 chdir(PROJECT);
 
 if(!empty($settings['banks'])) {
@@ -57,9 +58,9 @@ chdir(ROOT);
 $error = preg_replace(
 		'/([\w\.]+.c)\((\d+)\):error/',
 		'<a href="?modul=source&id=$1&line=$2">$0</a>',
-		$stderr);
+		$error);
 
-if(empty($stderr))
+if(empty($error))
 	copy( PROJECT.$project['name'].'.gb', 'roms/'.$project['name'].'.gb');
 
 $view->assign('error', $error);
