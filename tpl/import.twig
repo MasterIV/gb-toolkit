@@ -1,0 +1,33 @@
+<!-- Hidden Elements -->
+<div style="display: none">
+	<input type="file" accept="image/*" name="image" id="file-input">
+	<canvas id="hidden-canvas"></canvas>
+</div>
+
+<!-- Input Image -->
+<h2>Import Image</h2>
+
+<div class="alert alert-warning"><strong>Warning:</strong> Importing will overwrite files with the same name.</div>
+
+<figure class="import"><canvas id="canvas" width="160" height="144"></canvas></figure>
+
+<form class="import" method="post" action="?modul=import">
+
+	<label for="importTiles">Import Tiles</label>
+	<input id="saveTiles" type="checkbox" name="save_tiles">
+	<input id="importTiles" class="input-xlarge" type="text" name="name_tiles">
+
+	<label for="importMap">Import Map</label>
+	<input id="saveMap" type="checkbox" name="save_map">
+	<input id="importMap" class="input-xlarge" type="text" name="name_map">
+
+	<textarea id="dataTiles" spellcheck="false" name="data_tiles"></textarea>
+	<textarea id="dataMap" spellcheck="false" name="data_map"></textarea>
+
+	<input type="hidden" id="dimensionMap" name="dimension_map">
+
+	<p style="margin-top: 20px"><button type="submit" class="btn btn-primary">Import</button></p>
+
+</form>
+
+<h2>Import Code</h2>

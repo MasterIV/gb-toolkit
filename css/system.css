@@ -32,6 +32,36 @@ canvas {
 	margin-left: 10px;
 }
 
+/* Import page styles */
+
+figure.import {
+	float: left;
+	display: block;
+	margin: 0px 10px 10px 10px;
+	padding: 0px;
+	border: 1px solid rgba(0, 0, 0, 0.6);
+	border-radius: 3px;
+	box-shadow: -1px 0px 0px rgba(255, 255, 255, 0.7), 1px 0px 0px rgba(255, 255, 255, 0.7), 0px 1px 0px rgba(255, 255, 255, 0.7);
+	overflow: hidden;
+	line-height: 1px;
+}
+
+figure.import #canvas {
+	margin: 0;
+}
+
+form.import {
+	margin-top: 28px;
+}
+
+.import input[type=checkbox] {
+	margin-bottom: 15px;
+}
+
+.import textarea {
+	display: none;
+}
+
 /* Image editor styles */
 
 #canvas, #thumbs {
