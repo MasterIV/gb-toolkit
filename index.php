@@ -40,7 +40,7 @@ if( $user ) {
 		$files = [];
 
 		// load project files
-		foreach(glob(PROJECT.'*', GLOB_BRACE) as $f) {
+		foreach(glob(PROJECT.'*') as $f) {
 			$extension = strrchr($f, '.');
 			if(isset($types[$extension])) {
 				$fileType = $types[$extension];

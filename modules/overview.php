@@ -93,6 +93,15 @@ if(!empty($_POST['settings'])) {
 	throw new redirect('?modul=overview');
 }
 
+if(isset($_GET['export'])) {
+	$zip = new ZipArchive();
+	$zip->open('export/'.$project['name'].'.zip', ZipArchive::CREATE);
+	$zip->addGlob(PROJECT.'*', 0, ['remove_all_path' => true]);
+	$zip->close();
+
+	throw new redirect('export/'.$project['name'].'.zip');
+}
+
 if(empty($settings)) $settings = $defaults;
 
 $view->assign('template', 'settings.twig');
