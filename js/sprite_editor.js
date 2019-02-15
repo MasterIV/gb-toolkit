@@ -11,6 +11,9 @@ function SpriteEditor(data) {
 
 	var raw = encoder.decode(data);
 	var tiles = raw.map(add);
+	var smode = false;
+
+	var translate = [0,2,1,3];
 
 	function empty() {
 		var d = [];
@@ -43,15 +46,22 @@ function SpriteEditor(data) {
 		$('#thumbs canvas').removeClass('active');
 		canvasSpace.empty();
 
-		for(var i = 0; i<display; i++) {
-			if(!tiles[t+i]) {
+		for(var i = 0; i<display; i++)
+			if (!tiles[t + i]) {
 				var n = empty();
 				raw.push(n);
 				tiles.push(add(n));
 			}
 
+		for(var i = 0; i<display; i++) {
 			$(tiles[t+i].thumb).addClass('active');
-			canvasSpace.append(tiles[t+i].canvas);
+
+			if(smode && display == 4)
+				canvasSpace.append(tiles[t+translate[i]].canvas);
+			else
+				canvasSpace.append(tiles[t+i].canvas);
+
+
 			if((i+1) % dimension[0] == 0)
 				canvasSpace.append('<br>');
 		}
@@ -83,6 +93,12 @@ function SpriteEditor(data) {
 
 	this.add = function () {
 		select(total);
+	};
+
+	this.mode = function(btn) {
+		$(btn).toggleClass('active');
+		smode = !smode;
+		select(selected);
 	};
 
 	this.color(0);

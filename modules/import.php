@@ -32,5 +32,9 @@ if(!empty($_POST)) {
 	throw new redirect('?modul=import');
 }
 
+if(!empty($_FILES['zip'])) {
+	
+}
+
 $view->js('js/gbtdg.js');
 $view->assign('template', 'import.twig');
