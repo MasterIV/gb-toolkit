@@ -6,6 +6,7 @@ if (isset($_POST['source'])) {
 
 if (isset($_GET['delete'])) {
     unlink(PROJECT . $id);
+    throw new redirect('?modul=overview');
 }
 
 $view->assign('template', 'source.twig');
