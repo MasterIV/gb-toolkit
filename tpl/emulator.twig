@@ -1,49 +1,29 @@
-{% if not error %}<div class="emulator">
-	<div class="C">
+{% if not error %}
+	<div id="emulator">
+		<div id="gfx">
+			<canvas id="mainCanvas" style="width: 480px; height: 432px;"></canvas>
+		</div>
 
-		<canvas id="LCD" width="160" height="144" style="width: 480px; height: 432px;"></canvas>
-		<div id="STATUS">Pause</div>
-		<div id="DEBUG">&nbsp;</div>
+		<ul>
+			<li><b>Button A:</b> X/J</li>
+			<li><b>Button B:</b> Z/Y/Q</li>
+			<li><b>Select:</b> Shift</li>
+			<li><b>Start:</b> Enter</li>
+		</ul>
 
-		<input id="TOGGLE_DEBUGGER" type="checkbox" onclick="gb_Toggle_Debugger(this.checked);"/>
-		<label for="TOGGLE_DEBUGGER">debugger</label> | <a target="_blank" href="emulator/credits.html">credits</a>
+		<p class="copy">
+			Based on <a href="https://github.com/taisel/GameBoy-Online"
+			            target="_blank">https://github.com/taisel/GameBoy-Online</a>
+		</p>
+
+		<p>
+			<a class="btn btn-primary" href="{{ rom }}">Download</a>
+		</p>
 	</div>
 
-	<div id="DEBUGGER"></div>
-
-	<div class="C">
-		<strong>X</strong>: Button A<br/>
-		<strong>Z</strong>: Button B<br/>
-		<strong>A</strong>: Start<br/>
-		<strong>S</strong>: Select<br/>
-	</div>
-
-	<p class="C"><a class="btn btn-primary" href="{{ rom }}">Download</a></p>
-
-	<script type="application/x-javascript">
-
-		var gbSeconds = 0;
-		var gbFrames = 0;
-
-		function gb_Show_Fps() {
-			gbFrames += gbFPS;
-			gbSeconds++;
-			$('STATUS').innerHTML =
-					'Running: ' + gbFPS + ' ' +
-					'fps - Average: ' + (gbFrames / gbSeconds).toFixed(2) + ' - ' +
-					'Bank switches/s: ' + gbBankSwitchCount;
-			gbFPS = 0;
-			gbBankSwitchCount = 0;
-		}
-
-		function gb_Toggle_Debugger(show) {
-			$('DEBUGGER').style.height = (show) ? 'auto' : '0px';
-		}
-
+	<script>
 		window.onload = function () {
-			gb_Insert_Cartridge('{{ rom }}', true);
-			gb_Toggle_Debugger(false);
+			loadGame("{{ rom }}");
 		}
-
 	</script>
 {% endif %}

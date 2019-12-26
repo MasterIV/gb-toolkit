@@ -116,3 +116,24 @@ form.import {
 .modal-body {
 	max-height: none;
 }
+
+#emulator {
+	text-align: center;
+}
+
+#emulator > * {
+	margin: 20px
+}
+
+#emulator canvas {
+	box-shadow:  white 0 0 0 2px, #CDC 0 0 0 3px;
+}
+
+.copy {
+	color: #555;
+	font-style: italic;
+}
+
+.copy a {
+	color: #66A;
+}

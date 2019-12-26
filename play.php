@@ -10,19 +10,13 @@ if( !preg_match('/^[-\w]+$/', $_GET['game']) || !is_file($rom))
 
 $view = new view('play');
 
-$view->js('emulator/toolbox.js');
-$view->js('emulator/scrollbar.js');
-$view->js('emulator/jsgb.cpu.js');
-$view->js('emulator/jsgb.memory.js');
-$view->js('emulator/jsgb.rom.js');
-$view->js('emulator/jsgb.interrupts.js');
-$view->js('emulator/jsgb.input.js');
-$view->js('emulator/jsgb.lcd.js');
-$view->js('emulator/jsgb.timers.js');
-$view->js('emulator/jsgb.debugger.js');
-$view->js('emulator/jsgb.gameboy.js');
-
-$view->css('emulator/jsgb.styles.css');
+$view->js('emulator/resize.js');
+$view->js('emulator/resampler.js');
+$view->js('emulator/swfobject.js');
+$view->js('emulator/XAudioServer.js');
+$view->js('emulator/GameBoyCore.js');
+$view->js('emulator/GameBoyIO.js');
+$view->js('emulator/Main.js');
 
 $view->assign('rom', $rom);
 $view->display();
