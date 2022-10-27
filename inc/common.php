@@ -25,12 +25,6 @@ function ivAutoloader($class) {
 
 spl_autoload_register('ivAutoloader');
 
-// Magic Quotes entfernen
-if( get_magic_quotes_gpc()) {
-	function strip_quotes(&$value) { $value = stripslashes($value); }
-	$gpc = array(&$_GET, &$_POST, &$_COOKIE, &$_REQUEST);
-	array_walk_recursive($gpc, 'strip_quotes');
-}
 
 // Funktion
 require 'inc/functions.php';

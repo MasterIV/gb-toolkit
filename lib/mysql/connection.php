@@ -1,11 +1,22 @@
 <?php
 
-class mysql_connection extends mysqli {
+class mysql_connection {
+	private $con;
+
+	public function __construct($host, $user, $pass, $db) {
+		$this->con = new mysqli($host, $user, $pass, $db);
+	}
+
 	/**
 	 * Closes the connection on object destruction
 	 */
 	public function __destruct() {
-		$this->close();
+		$this->con->close();
+	}
+
+
+	public function set_charset($c) {
+		$this->con->set_charset($c);
 	}
 
 	/**
@@ -33,7 +44,7 @@ class mysql_connection extends mysqli {
 	 * @throws mysql_exception
 	 */
 	public function exec( $query ) {
-		if( $result = parent::query( $query )) return $result;
+		if( $result = $this->con->query( $query )) return $result;
 		else throw new mysql_exception( $query, $this );
 	}
 
@@ -85,7 +96,7 @@ class mysql_connection extends mysqli {
 	 * @return int
 	 */
 	public function id() {
-		return $this->insert_id;
+		return $this->con->insert_id;
 	}
 
 	/**
@@ -94,7 +105,7 @@ class mysql_connection extends mysqli {
 	 * @return string
 	 */
 	public function escape( $value ) {
-		return $this->escape_string( $value );
+		return $this->con->escape_string( $value );
 	}
 
 
