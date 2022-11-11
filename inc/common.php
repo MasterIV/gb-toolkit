@@ -1,7 +1,7 @@
 <?php
 
 // Error Reporting Konfigurieren
-define( 'ERROR_LEVEL', E_ALL ^ E_NOTICE);
+define('ERROR_LEVEL', E_ALL ^ E_NOTICE ^ E_WARNING);
 error_reporting(ERROR_LEVEL);
 
 @ini_set( 'display_errors', 1 );
@@ -27,6 +27,7 @@ spl_autoload_register('ivAutoloader');
 
 
 // Funktion
+require 'vendor/autoload.php';
 require 'inc/functions.php';
 require 'inc/settings.config.php';
 

@@ -13,7 +13,7 @@ class mysql_table implements IteratorAggregate {
 		return $this->name;
 	}
 
-	public function getIterator() {
+	public function getIterator() : Traversable {
 		return $this->all();
 	}
 
@@ -101,8 +101,8 @@ class mysql_table implements IteratorAggregate {
 	 */
 	public function insert( $values, $type = 'INSERT' ) {
 		$values['create_date'] = time();
-		if( function_exists( 'current_user' ))
-			$values['create_by'] = current_user();
+		if( function_exists( 'userid' ))
+			$values['create_by'] = userid();
 
 		$fields = $vals = array();
 		foreach( $this->flist() as $f )
@@ -130,8 +130,8 @@ class mysql_table implements IteratorAggregate {
 		}
 
 		$values['update_date'] = time();
-		if( function_exists( 'current_user' ))
-			$values['update_by'] = current_user();
+		if( function_exists( 'userid' ))
+			$values['update_by'] = userid();
 
 		$ups = array();
 		foreach( $this->flist() as $f )
@@ -160,8 +160,8 @@ class mysql_table implements IteratorAggregate {
 		foreach( $values as $row ) {
 			$val = array();
 			$row['create_date'] = time();
-			if( function_exists( 'current_user' ))
-				$row['create_by'] = current_user();
+			if( function_exists( 'userid' ))
+				$row['create_by'] = userid();
 
 			foreach( $fields as $f )
 				$val[] = "'".$this->db->escape( $row[$f] )."'";

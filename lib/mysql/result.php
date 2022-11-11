@@ -114,24 +114,24 @@ class mysql_result implements Iterator {
 		return $erg;
 	}
 
-	public function current() {
+	public function current() : mixed {
 		return $this->assoc();
 	}
 
-	public function key() {
+	public function key() : mixed {
 		return $this->row;
 	}
 
-	public function next() {
+	public function next() : void {
 		$this->row++;
 	}
 
-	public function rewind() {
+	public function rewind() : void {
 		$this->row = 0;
 		$this->res->data_seek( 0 );
 	}
 
-	public function valid() {
+	public function valid() : bool {
 		return $this->row < $this->max;
 	}
 }

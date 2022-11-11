@@ -27,7 +27,7 @@ if( $user ) {
 
 	// try to load project
 	if($session->project)
-		$project = db()->query("SELECT p.*, c.rights FROM projects p 
+		$project = db()->query("SELECT p.*, c.rights FROM projects p
 				LEFT JOIN collaborators c ON c.project = p.id
 				WHERE p.id = %d AND (p.owner = %d OR c.user = %d)",
 				$session->project, $user->id, $user->id)->assoc();

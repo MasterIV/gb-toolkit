@@ -75,7 +75,7 @@ class view {
 					return template($this->file)->render($this->context);
 			}
 		} catch (Exception $e) {
-			return $e->getTraceAsString();
+			return $e->getMessage().PHP_EOL.$e->getTraceAsString();
 		}
 	}
 

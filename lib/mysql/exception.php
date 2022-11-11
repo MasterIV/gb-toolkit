@@ -8,7 +8,7 @@ class mysql_exception extends Exception {
 	protected $query;
 	protected $error;
 
-	function  __construct( $sql, mysql_connection $db ) {
+	function  __construct( $sql, mysqli $db ) {
 		parent::__construct( sprintf("SQL Error: %s\nIn the Query: %s", $db->error, $sql), $db->errno );
 		$this->error = $db->error;
 		$this->query = $sql;

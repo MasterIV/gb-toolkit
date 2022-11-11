@@ -187,7 +187,7 @@ class session_iv {
 				$result['error'] = 'Passwort und Wiederholung stimmen nicht überein.';
 			} else {
 				$pass = self::crypt($_POST['change_pass'], $salt = uniqid());
-				db()->user_data->updateRow( array('pass_format' => 0, 'pass_hash' => $pass, 'pass_salt' => $salt), current_user());
+				db()->user_data->updateRow( array('pass_format' => 0, 'pass_hash' => $pass, 'pass_salt' => $salt), userid());
 				$result['success'] = 'Passwort erfolgreich geändert.';
 			}
 		}

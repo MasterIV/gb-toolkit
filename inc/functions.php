@@ -68,5 +68,5 @@ function encode_image_data($raw) {
 
 
 function valid_name($name) {
-	return preg_match('/^[-\w]+(\.[-\w]+)*$/', $name );
+	return $name && preg_match('/^[-\w]+(\.[-\w]+)*$/', $name );
 }

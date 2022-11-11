@@ -45,7 +45,7 @@ class mysql_connection {
 	 */
 	public function exec( $query ) {
 		if( $result = $this->con->query( $query )) return $result;
-		else throw new mysql_exception( $query, $this );
+		else throw new mysql_exception( $query, $this->con );
 	}
 
 	/**

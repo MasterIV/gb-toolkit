@@ -3,10 +3,12 @@
 if(PHP_SAPI != 'cli') die('Please run this script in cli mode only');
 
 // Autoloading für Klassen
-function __autoload( $class ) {
+function ivAutoloader( $class ) {
 	$file = 'lib/' . str_replace( '_', '/', $class ) . '.php';
 	if( file_exists( $file )) require( $file );
 }
+
+spl_autoload_register('ivAutoloader');
 
 // Funktion
 require 'inc/functions.php';

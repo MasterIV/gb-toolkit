@@ -2,7 +2,7 @@
 
 $project = $_GET['project'];
 $templates = globFiles('templates/*');
-$projects = db()->query("SELECT p.*, c.rights FROM projects p 
+$projects = db()->query("SELECT p.*, c.rights FROM projects p
 				LEFT JOIN collaborators c ON c.project = p.id
 				WHERE p.owner = %d OR c.user = %d",
 		$user->id, $user->id)->assocs('id');
@@ -27,7 +27,7 @@ if(!empty($_POST['project_name']) && !empty($_POST['project_template'])) {
 		copy($f, PROJECTS_ROOT.'/'.$name.strrchr($f, '/'));
 
 	rename(PROJECTS_ROOT.'/'.$name.'/'.$tpl.'.c', PROJECTS_ROOT.'/'.$name.'/'.$name.'.c');
-	$project = db()->insert_id;
+	$project = db()->id();
 	$projects[$project] = [];
 }
 
@@ -39,5 +39,3 @@ if(!empty($project) && isset($projects[$project])) {
 $view->assign('projects', $projects);
 $view->assign('templates', $templates);
 $view->setFile( 'projects' );
-
-
